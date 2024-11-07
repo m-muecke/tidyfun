@@ -245,7 +245,7 @@ leading to unexpected behavior for tf vectors.
 
 To ensure the correct mean calculation for tf vectors, there are two solutions:
 
-- Alternatively, explicitly call `tf:::mean.tf(activity)` in your code to directly specify the tf mean calculation.
 - Set `options(data.table.optimize = 0)`, which disables optimization, allowing the mean function to correctly dispatch to `tidyfun`.
+- Alternatively, explicitly call `tf:::mean.tf(activity)` in your code to directly specify the tf mean calculation.
 
   This caveat applies specifically to `mean()` and is the only known issue when working with `tidyfun` functional data objects within data.table.
