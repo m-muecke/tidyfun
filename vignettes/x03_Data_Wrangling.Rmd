@@ -236,3 +236,15 @@ dti_df |>
   geom_spaghetti(aes(y = cca_tfb_deriv), alpha = 0.3, linewidth = 0.3, col = "red") +
   ylab("d/dt f(t)")
 ```
+
+# Working with `data.table`
+
+There is a known caveat when calculating the mean of tf vectors within a `data.table` context.
+By default, `data.table` will optimize calculations, which may cause `mean` to dispatch to data.table's own optimized implementation,
+leading to unexpected behavior for tf vectors.
+
+To ensure the correct mean calculation for tf vectors, there are two solutions:
+
+- Alternatively, explicitly call `tf:::mean.tf(activity)` in your code to directly specify the tf mean calculation.
+- Set `options(data.table.optimize = 0)`, which disables optimization, allowing the mean function to correctly dispatch to `tidyfun`.
+  This caveat applies specifically to `mean()` and is the only known issue when working with `tidyfun` functional data objects within data.table.
