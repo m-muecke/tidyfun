@@ -126,29 +126,24 @@ tf_spread <- function(data, value, arg, sep = "_", interpolate = FALSE) {
   if (missing(value)) {
     tf_cols <- which(map_lgl(data, is_tf))
     if (length(tf_cols) == 0) {
-      warning(
-        "<value>-argument ", sQuote(tf_var),
-        " is not a column of class 'tf'. Nothing's happening here.",
-        call. = FALSE
+      cli::cli_warn(
+        "{.arg value} {.val {tf_var}} is not a column of class {.cls tf}. Nothing's happening here."
       )
       return(data)
     }
     if (length(tf_cols) == 1) {
       value <- tf_cols
     } else {
-      stop(
-        "More than one `tf` found, specify which one to spread in <value>.",
-        call. = FALSE
+      cli::cli_abort(
+        "More than one {.cls tf} found, specify which one to spread in {.arg value}."
       )
     }
   }
   tf_var <- tidyselect::vars_pull(names(data), !!enquo(value))
   tf <- data[[tf_var]]
   if (!is_tf(tf)) {
-    warning(
-      "<value>-argument ", sQuote(tf_var),
-      " is not a column of class 'tf'. Nothing's happening here.",
-      call. = FALSE
+    cli::cli_warn(
+      "{.arg value} {.val {tf_var}} is not a column of class {.cls tf}. Nothing's happening here."
     )
     return(data)
   }
@@ -158,11 +153,8 @@ tf_spread <- function(data, value, arg, sep = "_", interpolate = FALSE) {
       arg <- unlist(arg) |>
         unique() |>
         sort()
-      warning(
-        "no explicit <arg> for irregular ", sQuote(tf_var),
-        " provided-- using all ", length(arg),
-        " distinct observed argument values.",
-        call. = FALSE
+      cli::cli_warn(
+        "no explicit {.arg arg} for irregular {.val {tf_var}} provided -- using all {length(arg)}, distinct observed argument values.",
       )
     }
   }
@@ -247,10 +239,8 @@ tf_nest <- function(data, ..., .id = "id", .arg = "arg", domain = NULL,
     summarise_all(function(x) !all(x == 1L)) |>
     select_if(isTRUE)
   if (ncol(not_constant)) {
-    stop(
-      "Can't nest - columns ", toString(names(not_constant)),
-      " are not constant for all levels of the id-variable.",
-      call. = FALSE
+    cli::cli_abort(
+      "Can't nest - columns {.val {names(not_constant)}} are not constant for all levels of {.arg id}"
     )
   }
 
@@ -258,7 +248,7 @@ tf_nest <- function(data, ..., .id = "id", .arg = "arg", domain = NULL,
   # TODO: parallelize this over evaluator, domain, resolution
   tfd_list <- pmap(
     list(value_vars, evaluator, domain, resolution),
-    \(x, y, z, w) {
+    function(x, y, z, w) {
       data |>
         select(!!id_var, !!arg_var, all_of(x)) |>
         tfd(evaluator = !!y, domain = z, resolution = w)
@@ -328,9 +318,9 @@ tf_unnest.data.frame <- function(data, cols, arg, interpolate = TRUE,
   if (missing(cols)) {
     tf_cols <- names(data)[map_lgl(data, is_tf)]
     cols <- expr(c(!!!syms(tf_cols)))
-    warning(paste0(
-      "`cols` is now required.\n", "Please use `cols = ", expr_text(cols), "`"
-    ), call. = FALSE)
+    cli::cli_warn(
+      "{.arg cols} is now required. Please use {.code cols = {expr_text(cols)}}"
+    )
   }
 
   ret <- tf_evaluate.data.frame(data, !!enquo(cols), arg = arg) |>
