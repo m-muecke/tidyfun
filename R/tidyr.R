@@ -54,7 +54,7 @@ tf_gather <- function(data, ..., key = ".tfd", arg = NULL, domain = NULL,
   if (length(gather_vars) == 1 && is.matrix(data[[gather_vars]]) && search_key) {
     key_var <- gather_vars
     search_key <- FALSE
-    message("creating new tfd-column <", key_var, ">")
+    cli::cli_inform("creating new {.cls tfd}-column {.val {key_var}}")
   }
 
   tfd_data <- data |>
@@ -75,7 +75,7 @@ tf_gather <- function(data, ..., key = ".tfd", arg = NULL, domain = NULL,
     found_key <- unique(found_key)
     if (length(found_key) == 1 && all(found_key != "")) {
       key_var <- found_key
-      message("creating new tfd-column <", key_var, ">")
+      cli::cli_inform("creating new {.cls tfd}-column {.val {key_var}}")
     }
   }
 
