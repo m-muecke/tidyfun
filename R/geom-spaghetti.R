@@ -52,7 +52,11 @@ StatTf <- ggproto("StatTf", Stat,
     params
   },
   compute_layer = function(self, data, params, layout) {
-    stopifnot(is_tf(pull(data, y)))
+    if (!is_tf(data$y)) {
+      cli::cli_abort(
+        "y must be a tf object, not {.obj_type_friendly {data$y}}"
+      )
+    }
     tf_eval <- suppressMessages(
       data |>
         mutate(y____id = names(y) %||% seq_along(y)) |>

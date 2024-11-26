@@ -198,7 +198,11 @@ tf_spread <- function(data, value, arg, sep = "_", interpolate = FALSE) {
 #' @seealso tfd() for `domain, evaluator, resolution`
 tf_nest <- function(data, ..., .id = "id", .arg = "arg", domain = NULL,
                     evaluator = "tf_approx_linear", resolution = NULL) {
-  stopifnot(!missing(data))
+  if (!is.data.frame(data)) {
+    cli::cli_abort(
+      "{.arg {data}} must be data frame, not {.obj_type_friendly {data}}."
+    )
+  }
   id_var <- quo_name(enexpr(.id))
   arg_var <- quo_name(enexpr(.arg))
   quos <- quos(...)
@@ -207,26 +211,43 @@ tf_nest <- function(data, ..., .id = "id", .arg = "arg", domain = NULL,
   } else {
     value_vars <- unname(vars_select(names(data), !!!quos))
   }
-  if (is_empty(value_vars)) {
+  n_value_vars <- length(value_vars)
+  if (n_value_vars == 0) {
     return(data)
   }
   # homogenize inputs:
-  stopifnot(length(evaluator) %in% c(1, length(value_vars)))
+  if (!length(evaluator) %in% c(1, n_value_vars)) {
+    cli::cli_abort(
+      "{.arg evaluator} length must be 1 or {n_value_vars}, not {length(evaluator)}."
+    )
+  }
   if (!is.list(domain)) {
-    domain <- replicate(length(value_vars), domain, simplify = FALSE)
+    domain <- replicate(n_value_vars, domain, simplify = FALSE)
   } else {
-    stopifnot(length(domain) %in% c(1, length(value_vars)))
+    if (!length(domain) %in% c(1, n_value_vars)) {
+      cli::cli_abort(
+        "{.arg domain} length must be 1 or {n_value_vars}, not {length(domain)}."
+      )
+    }
   }
   if (is.null(resolution)) {
-    resolution <- replicate(length(value_vars), resolution, simplify = FALSE)
+    resolution <- replicate(n_value_vars, resolution, simplify = FALSE)
   }
   if (!is.list(resolution) && !is.null(resolution)) {
     resolution <- as.list(resolution)
   } else {
-    stopifnot(length(resolution) %in% c(1, length(value_vars)))
+    if (!length(resolution) %in% c(1, n_value_vars)) {
+      cli::cli_abort(
+        "{.arg resolution} length must be 1 or {n_value_vars}, not {length(resolution)}."
+      )
+    }
   }
   evaluator <- as.list(evaluator)
-  stopifnot(length(evaluator) %in% c(1, length(value_vars)))
+  if (!length(evaluator) %in% c(1, n_value_vars)) {
+    cli::cli_abort(
+      "{.arg evaluator} length must be 1 or {n_value_vars}, not {length(evaluator)}."
+    )
+  }
 
   remaining <- setdiff(names(data), c(id_var, arg_var, value_vars))
   # check that nesting is possible without information loss

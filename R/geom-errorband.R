@@ -32,7 +32,11 @@ StatErrorband <- ggproto("StatErrorband", Stat,
     params
   },
   compute_layer = function(self, data, params, layout) {
-    stopifnot(is_tf(pull(data, ymax)) & is_tf(pull(data, ymin)))
+    if (!is_tf(data$ymin) || !is_tf(data$ymax)) {
+      cli::cli_abort(
+        "ymax and ymin must be tf objects, not {.obj_type_friendly {data$ymin}} and {.obj_type_friendly {data$ymax}}"
+      )
+    }
     tf_eval <-
       suppressMessages(
         data |>

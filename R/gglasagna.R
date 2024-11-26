@@ -72,7 +72,11 @@ gglasagna <- function(data, tf, order = NULL, label = NULL,
   }
 
   # FIXME: render errors for weird arg lengths (e.g. 93)
-  stopifnot(is_tf(pull(data, !!enexpr(tf))))
+  if (!is_tf(pull(data, !!enexpr(tf)))) {
+    cli::cli_abort(
+      "{.arg tf} must be a tf object, not {.obj_type_friendly {pull(data, !!enexpr(tf))}}"
+    )
+  }
   has_order <- !is.null(match.call()[["order"]])
   has_order_by <- !is.null(match.call()[["order_by"]])
   order_label <- enexpr(order)
@@ -102,7 +106,11 @@ gglasagna <- function(data, tf, order = NULL, label = NULL,
   order_by_label <- enexpr(order_by)
   if (has_order_by) {
     order_by_label <- quo_name(order_by_label)
-    stopifnot(is.function(order_by))
+    if (!is.function(order_by)) {
+      cli::cli_abort(
+        "{.arg order_by} must be a function, not {.obj_type_friendly {order_by}}."
+      )
+    }
     order_by_value <- tf_eval |>
       group_by(..y) |>
       summarize(..order_by_value = order_by(..fill)) |>
