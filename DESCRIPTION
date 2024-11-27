@@ -20,6 +20,7 @@ Depends:
     R (>= 4.1),
     tf
 Imports:
+    cli,
     dplyr,
     GGally,
     ggplot2,

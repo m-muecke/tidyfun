@@ -56,8 +56,8 @@ test_that("tf_spread works", {
   set.seed(1312)
   d$fi <- tf_jiggle(tf_rgp(3, 11L))
   tf_spread(d, fi) |>
-    expect_warning("no explicit <arg>") |>
-    expect_warning("interpolate = FALSE")
+    expect_warning("no explicit `arg` for irregular") |>
+    expect_warning("`interpolate = FALSE`")
   expect_true(suppressWarnings(ncol(tf_spread(d, fi)) == 36))
   expect_equal(
     tf_spread(d, fi,

@@ -30,7 +30,7 @@ tf_evaluate.data.frame <- function(object, ..., arg) {
     tf_cols <- intersect(tf_cols, tf_to_evaluate)
   }
   if (!length(tf_cols)) {
-    warning("Nothing to be done for tf_evaluate.", call. = FALSE)
+    cli::cli_warn("Nothing to be done for {.fn tf_evaluate}.")
     return(object)
   }
   if (!missing(arg) && !is.null(arg)) {
@@ -41,7 +41,9 @@ tf_evaluate.data.frame <- function(object, ..., arg) {
   } else {
     arg <- map(object[tf_cols], \(x) tf::ensure_list(tf_arg(x)))
   }
-  stopifnot(length(arg) == length(tf_cols))
+  if (length(arg) != length(tf_cols)) {
+    cli::cli_abort("{.arg arg} length must match number of tf columns.")
+  }
   names(arg) <- tf_cols
   # convert them to list-columns of data.frames
   for (f in tf_cols) {
