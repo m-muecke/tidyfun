@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 library(tf)
-par(las = 1)
+oldpar <- par(las = 1)
 alpha_palette <- c(
   "#00000080", "#DF536B80", "#61D04F80", "#2297E680", "#28E2E580",
   "#CD0BBC80", "#F5C71080", "#9E9E9E80", "#00000080", "#DF536B80"
@@ -794,6 +794,10 @@ plot(reg_lm, main = "Landmark Registered",
 ```
 
 The piecewise linear warps align the pubertal peaks well, with the pubertal trough and infant growth landmarks anchoring the earlier phases. Compared to SRVF, the warps are simpler and fully interpretable — each segment directly corresponds to a physiological period (early childhood, late childhood, pubertal acceleration, post-peak deceleration). The trade-off is that landmark registration cannot adapt between landmarks (alignment between successive landmarks depends entirely on those two anchor points) and that landmark definition is often somewhat arbitrary (c.f. definition of "end of rapid infant growth" above...).
+
+```{r restore-par, include = FALSE}
+par(oldpar)
+```
 
 ## References
 

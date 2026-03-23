@@ -46,6 +46,7 @@ original columns in a very long "key"-column -- instead it creates a \code{tfd}-
 containing the functional measurements of the columns given in \code{...}.
 }
 \examples{
+\donttest{
 data(growth, package = "tf")
 (d <- tibble::as_tibble(as.data.frame(growth[1:5, ]$height[, 1:10, matrix = TRUE])))
 tf_gather(d)
@@ -53,6 +54,7 @@ tf_gather(d, key = "height_tf")
 tf_gather(d, arg = seq(0, 1, length.out = 10))
 (d2 <- dplyr::bind_cols(id = rownames(d), d))
 tf_gather(d2, -id) # tf_gather(d2, matches("height")); tf_gather(d2, -1); etc
+}
 }
 \seealso{
 \code{\link[dplyr:select]{dplyr::select()}}
