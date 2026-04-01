@@ -34,7 +34,9 @@
 #' tf_gather(d, key = "height_tf")
 #' tf_gather(d, arg = seq(0, 1, length.out = 10))
 #' (d2 <- dplyr::bind_cols(id = rownames(d), d))
-#' tf_gather(d2, -id) # tf_gather(d2, matches("height")); tf_gather(d2, -1); etc
+#' tf_gather(d2, -id)
+#' tf_gather(d2, dplyr::matches("height"))
+#' tf_gather(d2, -1)
 #' }
 tf_gather <- function(
   data,
