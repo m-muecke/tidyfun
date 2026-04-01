@@ -5,21 +5,24 @@
 The NOTE is the standard "New submission" note plus:
 
 - "geoms" flagged as possibly misspelled (see below)
-- Tarball size ~8.8 MB (vignettes with figures account for most of the size)
+- Tarball size ~9.2 MB (vignettes with figures account for most of the size)
 
 ## Test environments
 
 * local: Linux Mint 22.1, R 4.5.2
-* local nosuggests: 0 errors, 0 warnings, 0 notes
-* GitHub Actions (rhub): linux, macos-arm64, windows, nosuggests
+* GitHub Actions: ubuntu-latest (R-devel, release), macOS-latest (release),
+  windows-latest (release)
 
 ## Resubmission
 
-Changes from previous submission:
+Changes from previous submission (0.1.0):
 
 - Uncommented example code in `tf_gather.Rd` (moved from comments to
-  proper examples).
+  proper examples with tidyselect demonstrations).
 - Saved and restored `par()` in `x06_Registration` vignette.
+- Fixed broken URLs in vignettes (replaced projecteuclid.org 404s and
+  PMC 403 with DOI links).
+- Updated `NEWS.md` version to match `DESCRIPTION`.
 
 ## Reverse dependencies
 

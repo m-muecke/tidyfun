@@ -1,4 +1,4 @@
-# tidyfun 0.0.995
+# tidyfun 0.1.1
 
 * Initial CRAN submission.
 * Functional data types (`tfd`, `tfb`) as data frame columns via the `tf` package.
