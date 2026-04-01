@@ -17,9 +17,8 @@ The NOTE is the standard "New submission" note plus:
 
 Changes from previous submission:
 
-- Wrapped lengthy examples in `tf_gather.Rd` in `\donttest{}`.
 - Uncommented example code in `tf_gather.Rd` (moved from comments to
-  proper `\donttest{}` examples).
+  proper examples).
 - Saved and restored `par()` in `x06_Registration` vignette.
 
 ## Reverse dependencies
