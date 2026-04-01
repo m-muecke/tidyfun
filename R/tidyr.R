@@ -27,17 +27,15 @@
 #' @seealso [dplyr::select()]
 #' @family tidyfun data wrangling functions
 #' @examples
-#' \donttest{
-#' data(growth, package = "tf")
-#' (d <- tibble::as_tibble(as.data.frame(growth[1:5, ]$height[, 1:10, matrix = TRUE])))
-#' tf_gather(d)
-#' tf_gather(d, key = "height_tf")
-#' tf_gather(d, arg = seq(0, 1, length.out = 10))
-#' (d2 <- dplyr::bind_cols(id = rownames(d), d))
-#' tf_gather(d2, -id)
-#' tf_gather(d2, dplyr::matches("height"))
-#' tf_gather(d2, -1)
-#' }
+#' d <- tf_spread(growth[1:5, ]) |> dplyr::mutate(id = 1:dplyr::n())
+#' dplyr::glimpse(d)
+#' # tidyselect syntax for column selection:
+#' tf_gather(d, starts_with("height"))
+#' tf_gather(d, height_1:height_18)
+#' tf_gather(d, -gender, -id)
+#' # custom key name and arg values:
+#' tf_gather(d, starts_with("height"), key = "height")
+#' tf_gather(d, starts_with("height"), arg = seq(0, 1, length.out = 31))
 tf_gather <- function(
   data,
   ...,
