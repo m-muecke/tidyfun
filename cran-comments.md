@@ -13,9 +13,13 @@ The NOTE is the standard "New submission" note plus:
 * local nosuggests: 0 errors, 0 warnings, 0 notes
 * GitHub Actions (rhub): linux, macos-arm64, windows, nosuggests
 
-## First submission
+## Resubmission
 
-This is the first CRAN submission of tidyfun.
+Changes from previous submission:
+
+- Uncommented example code in `tf_gather.Rd` (moved from comments to
+  proper examples).
+- Saved and restored `par()` in `x06_Registration` vignette.
 
 ## Reverse dependencies
 
