@@ -16,7 +16,8 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 library(tf)
-oldpar <- par(las = 1)
+oldpar <- par(no.readonly = TRUE)
+par(las = 1)
 alpha_palette <- c(
   "#00000080", "#DF536B80", "#61D04F80", "#2297E680", "#28E2E580",
   "#CD0BBC80", "#F5C71080", "#9E9E9E80", "#00000080", "#DF536B80"
