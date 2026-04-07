@@ -4,8 +4,7 @@
 
 The NOTE is the standard "New submission" note plus:
 
-- "geoms" flagged as possibly misspelled (see below)
-- Tarball size ~9.2 MB (vignettes with figures account for most of the size)
+- "geoms" flagged as possibly misspelled (established ggplot2 term, see below)
 
 ## Test environments
 
@@ -15,14 +14,20 @@ The NOTE is the standard "New submission" note plus:
 
 ## Resubmission
 
-Changes from previous submission (0.1.0):
+Changes from previous submission (0.1.1, 2026-04-01):
 
-- Uncommented example code in `tf_gather.Rd` (moved from comments to
-  proper examples with tidyselect demonstrations).
-- Saved and restored `par()` in `x06_Registration` vignette.
-- Fixed broken URLs in vignettes (replaced projecteuclid.org 404s and
-  PMC 403 with DOI links).
-- Updated `NEWS.md` version to match `DESCRIPTION`.
+- Fixed URL for Kneip & Gasser (1992) reference: the DOI resolver
+  (`doi.org/10.1214/aos/1176348794`) returns 404 and the Project Euclid
+  HTML page is behind a bot wall, so we link directly to the PDF on
+  Project Euclid.
+- Reduced vignette figure dimensions and excluded visual test snapshots
+  to bring tarball size under 5 MB.
+
+### URL notes
+
+- `https://doi.org/10.1111/1467-9868.00129` (Wiley/JRSS-B): returns
+  403 to automated requests but resolves correctly in browsers. This is
+  Wiley's standard bot-blocking behavior.
 
 ## Reverse dependencies
 

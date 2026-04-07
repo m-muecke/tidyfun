@@ -4,7 +4,7 @@ author: "Jeff Goldsmith"
 date: "`r Sys.Date()`"
 output: 
     rmarkdown::html_vignette:
-      fig_width: 12
+      fig_width: 7
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Developer Notes}
@@ -15,8 +15,8 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "##",
-  fig.width = 8,
-  fig.height = 5.5,
+  fig.width = 6,
+  fig.height = 4,
   out.width = "90%"
 )
 
